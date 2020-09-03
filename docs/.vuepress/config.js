@@ -1,6 +1,6 @@
 module.exports = {
-	title: 'workbench',
-	description: 'Just playing around',
+	title: 'leetcode',
+	description: '使用正确的方式在LeetCode上进行刷题',
 	base: '/leetcode/',
 	
 	markdown: {
