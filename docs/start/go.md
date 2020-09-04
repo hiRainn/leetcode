@@ -165,7 +165,7 @@ a := <- c   //从通道中讲队列头部的值赋值给变量a
 
 ## interface(接口)
 
-需要讲一下interface类型，可以说它是一个类型，也不是一个类型。很多初学的同学会把interface当做是万能型，实际上它是一个可以装所有类型数据的数据类型。如果有以下场景，前端接口传回来的某个字段无法确定具体类型，这个时候就可以用interface类型接收。此处为简化代码，post数据为post
+需要讲一下interface类型。很多初学的同学会把interface当做是万能型，实际上它是一个可以装所有类型数据的数据类型。如果有以下场景，前端接口传回来的某个字段无法确定具体类型，这个时候就可以用interface类型接收。此处为简化代码，post数据为post
 
 ```go
 params := make(map[string]interface{})
@@ -185,6 +185,8 @@ val1,_ := params["key"].(int)  //当不需要第二个值的时候，可以用 _
 fmt.Println(val1)
 ```
 
+当然interface类型还可以实现接口方法，此处不作展开，有兴趣的同学可以浏览[go语言接口](http://c.biancheng.net/view/77.html)。
+
 ## 指针
 学过编程的或多或少的都知道指针，这里也只是简单的讲一下它的用法，深入的话请自行搜索。指针的声明方式有以下2种：
 ```go
@@ -199,3 +201,98 @@ fmt.Println(a) //输出100
 ```
 
 ## 流程控制
+
+### if 与 else
+
+go中的if与else后面是没有括号的，可以在判断条件时进行赋值后再进行判断，且这时候取的值的作用域仅在if/else中，这样可以重复利用变量名。左花括号{必须与 if 处于同一行。
+
+```go
+// 需要注意的是go中的else必须放在if后面一个括号的同一行，不然就会报错
+func main(){
+	if res := Max(1,2);res == ">" {
+		fmt.Println("a大于b")
+	} else {
+		fmt.Println("a不大于b")
+	}
+}
+
+func Max(a int,b int) string {
+	if a > b {
+		res := ">"
+		return res
+	} else if a == b {
+		res := "="
+		return res
+	} else {
+		res := "<"
+		return res
+	}
+}
+
+```
+
+### for 
+与多数语言不同的是，Go语言中的循环语句只支持 for 关键字，而不支持 while 和 do-while 结构，关键字 for 的基本使用方法与C语言和 C++ 中非常接近，如果你想实现while，可以结合break使用，类似if，左花括号{必须与 for 处于同一行。
+```go
+sum := 0
+for i := 0; i < 10; i++ {
+    sum += i
+}
+
+sum := 0
+for {
+    sum++
+    if sum > 100 {
+        break
+    }
+}
+
+//for循环数组或者切片或者map
+arr := []int{1,2,3,4}
+for key,val := range arr {
+	fmt.Println(key,val)
+}
+```
+
+### switch
+Go语言改进了 switch 的语法设计，case 与 case 之间是独立的代码块，不需要通过 break 语句跳出当前 case 代码块以避免执行到下一行，示例代码如下：
+```go
+var a = "hello"
+switch a {
+case "hello":
+    fmt.Println(1)  //代码输出1
+case "world":
+    fmt.Println(2)
+default:
+    fmt.Println(0)
+}
+
+//多个case 可放在一起
+var a = "mum"
+switch a {
+case "mum", "daddy":
+    fmt.Println("family")
+}
+
+//分支中可以写语句
+var r int = 11
+switch {
+case r > 10 && r < 20:
+    fmt.Println(r)
+}
+
+//如果你想要兼容其他语言，可以读取多个case，可以使用关键字fallthrough
+var s = "hello"
+switch {
+case s == "hello":
+    fmt.Println("hello")
+    fallthrough
+case s != "world":
+    fmt.Println("world")
+}
+```
+
+### break,continue,goto
+break,continue,goto的使用上基本用法与其他语言差别不大，这里不做多介绍。
+
+讲到这里，你应该对go语言有了一个大概的使用方法，使用以上的内容在LeetCode上进行刷题已经足够，如果你对go语言有更大的兴趣，可以自行查阅资料。

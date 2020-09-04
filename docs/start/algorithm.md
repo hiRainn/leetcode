@@ -1,5 +1,5 @@
 ---
-title: 快速开始
+title: 算法入门
 lang: zh_CN
 ---
 
