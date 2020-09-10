@@ -1,7 +1,6 @@
 ---
 title: go语法入门
 lang: zh_CN
-prev: false
 ---
 
 # go语法入门
